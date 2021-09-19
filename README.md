@@ -1,2 +1,2 @@
-# Sneebog 2023.github.io
+# Sneebog2023.github.io
 My website
