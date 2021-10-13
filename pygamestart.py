@@ -8,13 +8,14 @@ GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
 BROWN = (150, 75, 00)
+YELLOW = (255, 255, 00)
 pygame.init()
 x = 0
- 
 # Set the width and height of the screen [width, height]
 size = (700, 500)
 screen = pygame.display.set_mode(size)
- 
+xoffset = 5
+yoffset = 5
 pygame.display.set_caption("My Game")
  
 # Loop until the user clicks the close button.
@@ -42,14 +43,14 @@ while not done:
     screen.fill(BLUE)
  
     # --- Drawing code should go here
-    if x < 700:
-        x += 20
-    else:
-        x = 0
+    x -= xoffset
+    if x < 0 or x > 550:
+        xoffset = xoffset * -1
+
     pygame.draw.rect(screen, GREEN, [0, 400, 700, 200 ])
-    pygame.draw.rect(screen,  BROWN, [150, 300, 400, 200], 0)
-    pygame.draw.rect(screen, RED, [55, 50, 20, 25], 0)
-    pygame.draw.ellipse(screen, RED, [x,20,150,100], 0)
+    pygame.draw.rect(screen,  BROWN, [150, 200, 400, 400], 0)
+    pygame.draw.rect(screen, YELLOW, [215, 325, 275, 400])
+    pygame.draw.ellipse(screen, YELLOW, [x,20,150,100], 0)
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
  
