@@ -1,4 +1,4 @@
-
+import random
 import pygame
  
 # Define some colors
@@ -6,20 +6,22 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
- 
+
+#define some variables
+y, y2 = 175, 175
+yball = 20
+yoffset, xoffset, = 3, 3
+y_speed, y2_speed, x_speed = 0, 0, 0
+xball = random.random() * 500
+plint = 0
+
 pygame.init()
- 
+
 # Set the width and height of the screen [width, height]
 size = (700, 500)
 screen = pygame.display.set_mode(size)
-y = 175
-secy = 200
-yoffset = 0
-y_speed = 0
-x = 0
-x_speed = 0
-pygame.display.set_caption("My Game")
- 
+pygame.display.set_caption("Obb")
+
 # Loop until the user clicks the close button.
 done = False
  
@@ -32,11 +34,28 @@ while not done:
     
     # --- Game logic should go here
 
+    #Game win or lose
+    if xball <= 5 and (yball >= y - 10 and yball <= y + 200 ) or (xball >= 680 and (yball >= y2 - 10 and yball <= y2 + 200 )):
+        xoffset = xoffset * -1
+    elif xball <= 0:
+        done = True
+        answer = "You Lose"
+    elif xball >= 685:
+        done = True 
+        answer = "you win"
+    #stop the paddles going off the screen
+    if y <= 0:
+        y += 5
+    elif y >= 300:
+        y -= 5  
+    if y2 <= 0:
+        y2 += 5
+    elif y2 >= 300:
+        y2 -= 5
+    # User pressed down on a key
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
-
-    # User pressed down on a key
         elif event.type == pygame.KEYDOWN:
             # Figure out if it was an arrow key. If so
             # adjust speed.
@@ -52,31 +71,53 @@ while not done:
     # User let up on a key
         elif event.type == pygame.KEYUP:
             # If it is an arrow key, reset vector back to zero
-            if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                x_speed = 0
-            elif event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 y_speed = 0
+        if event.type == pygame.QUIT:
+            done = True
+    # User 2 pressed down on a key
+        elif event.type == pygame.KEYDOWN:
+        # Figure out if it was an wasd key. If so
+        # adjust speed.
+            if event.key == pygame.K_w:
+                y2_speed = -3
+            elif event.key == pygame.K_s:
+                y2_speed = 3
+ 
+    # User 2 let up on a key
+        elif event.type == pygame.KEYUP:
+        # If it is an arrow key, reset vector back to zero
+            if event.key == pygame.K_w or event.key == pygame.K_s:
+                y2_speed = 0
     # --- Screen-clearing code goes here
-    # Move the object according to the speed vector.
+    # Move the objects according to the speed vector.
     y += y_speed
-    x += x_speed
+    y2 += y2_speed
+    xball += xoffset
+    yball += yoffset
+    if xball < 0 or xball >= 685:
+        xoffset = xoffset * -1
+    if yball < 0 or yball >= 485:
+        yoffset = yoffset * -1
+    yoffset += 0.001
+    xoffset += 0.001
     # Here, we clear the screen to white. Don't put other drawing commands
     # above this, or they will be erased with this command.
- 
     # If you want a background image, replace this clear with blit'ing the
     # background image.
     screen.fill(BLACK)
  
     # --- Drawing code should go here
-    pygame.draw.rect(screen, WHITE, [x, y, 10, 200 ])
-    pygame.draw.rect(screen, WHITE, [690, 175, 700, 200 ])
+    pygame.draw.rect(screen, WHITE, [0, y, 10, 200 ])
+    pygame.draw.rect(screen, WHITE, [690, y2, 700, 200 ])
     pygame.draw.line(screen, WHITE, [350,0], [350, 500], 6)
-    pygame.draw.ellipse(screen, RED, [20,20,25,25], 0)
+    pygame.draw.ellipse(screen, RED, [xball,yball,25,25], 0)
     # --- Go ahead and update the screen with what we've drawn.
+    
     pygame.display.flip()
- 
+    
     # --- Limit to 60 frames per second
     clock.tick(60)
- 
+print(answer)
 # Close the window and quit.
 pygame.quit()
