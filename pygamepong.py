@@ -1,6 +1,6 @@
 import random
 import pygame
- 
+#deport Seth
 # Define some colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -14,7 +14,7 @@ yoffset, xoffset, = 3, 3
 y_speed, y2_speed, x_speed = 0, 0, 0
 xball = random.random() * 500
 plint = 0
-
+x = 0
 pygame.init()
 
 # Set the width and height of the screen [width, height]
@@ -27,7 +27,9 @@ done = False
  
 # Used to manage how fast the screen updates
 clock = pygame.time.Clock()
- 
+pygame.mixer.init()
+pygame.mixer.music.load("shakira.mp3")
+pygame.mixer.music.play(-1,0.0)
 # -------- Main Program Loop -----------
 while not done:
     # --- Main event loop
@@ -35,7 +37,7 @@ while not done:
     # --- Game logic should go here
 
     #Game win or lose
-    if xball <= 5 and (yball >= y - 10 and yball <= y + 200 ) or (xball >= 680 and (yball >= y2 - 10 and yball <= y2 + 200 )):
+    if xball <= 10 and (yball >= y - 10 and yball <= y + 200 ) or (xball >= 670 and (yball >= y2 - 10 and yball <= y2 + 200 )):
         xoffset = xoffset * -1
     elif xball <= 0:
         done = True
@@ -89,6 +91,8 @@ while not done:
         # If it is an arrow key, reset vector back to zero
             if event.key == pygame.K_w or event.key == pygame.K_s:
                 y2_speed = 0
+    #Ai code for the second paddle
+    
     # --- Screen-clearing code goes here
     # Move the objects according to the speed vector.
     y += y_speed
@@ -99,16 +103,17 @@ while not done:
         xoffset = xoffset * -1
     if yball < 0 or yball >= 485:
         yoffset = yoffset * -1
-    yoffset += 0.001
-    xoffset += 0.001
-    # Here, we clear the screen to white. Don't put other drawing commands
+    yoffset += 0.01
+    xoffset += 0.01
+    
+    # Here, we clear the screen to white. Don't put other drawing commandsw
     # above this, or they will be erased with this command.
     # If you want a background image, replace this clear with blit'ing the
     # background image.
     screen.fill(BLACK)
  
     # --- Drawing code should go here
-    pygame.draw.rect(screen, WHITE, [0, y, 10, 200 ])
+    pygame.draw.rect(screen, WHITE, [x, y, 10, 200 ])
     pygame.draw.rect(screen, WHITE, [690, y2, 700, 200 ])
     pygame.draw.line(screen, WHITE, [350,0], [350, 500], 6)
     pygame.draw.ellipse(screen, RED, [xball,yball,25,25], 0)
@@ -118,6 +123,6 @@ while not done:
     
     # --- Limit to 60 frames per second
     clock.tick(60)
-print(answer)
+print(answer, "没有共产党就没有新中国 没有共产党就没有新中国 共产党辛劳为民族 共产党他一心救中国他指给了人民解放的道路 他领导中国走向光明 他坚持了抗战八年多 他改善了人民生活 他建设了敌后根据地 他实行了民主好处多 没有共产党就没有新中国 没有共产党就没有新中国")
 # Close the window and quit.
 pygame.quit()
