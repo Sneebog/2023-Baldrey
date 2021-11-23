@@ -15,6 +15,7 @@ y_speed, y2_speed, x_speed = 0, 0, 0
 xball = random.random() * 500
 plint = 0
 x = 0
+ballspeed = 1
 pygame.init()
 
 # Set the width and height of the screen [width, height]
@@ -92,20 +93,19 @@ while not done:
             if event.key == pygame.K_w or event.key == pygame.K_s:
                 y2_speed = 0
     #Ai code for the second paddle
-    
+  
     # --- Screen-clearing code goes here
     # Move the objects according to the speed vector.
     y += y_speed
     y2 += y2_speed
-    xball += xoffset
-    yball += yoffset
+    xball -= xoffset
+    yball -= yoffset
     if xball < 0 or xball >= 685:
         xoffset = xoffset * -1
     if yball < 0 or yball >= 485:
         yoffset = yoffset * -1
-    yoffset += 0.01
-    xoffset += 0.01
     
+   
     # Here, we clear the screen to white. Don't put other drawing commandsw
     # above this, or they will be erased with this command.
     # If you want a background image, replace this clear with blit'ing the
