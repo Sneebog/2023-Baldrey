@@ -234,5 +234,5 @@ while not done:
  
     # Limit to 60 frames per second
     clock.tick(60)
-print(answer, "没有共产党就没有新中国 没有共产党就没有新中国 共产党辛劳为民族 共产党他一心救中国他指给了人民解放的道路 他领导中国走向光明 他坚持了抗战八年多 他改善了人民生活 他建设了敌后根据地 他实行了民主好处多 没有共产党就没有新中国 没有共产党就没有新中国")
+print(answer)
 pygame.quit()
