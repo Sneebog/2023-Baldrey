@@ -1,0 +1,5 @@
+print("what is first name?")
+first = input()
+print("what is surname?")
+surname = input()
+print(first, surname)
