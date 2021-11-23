@@ -17,8 +17,8 @@ PINKY = (230, 41, 173)
 #define some variables
 x_speed = 0
 playerx = 250
-xball = 200
-yball = 350
+xball = 285
+yball = 305
 colour = RED
 answer = "" 
 speedtimer = 0
@@ -163,7 +163,7 @@ while not done:
     if len(block_list) == 0:
         done = True
         answer = "congratulation"
-    elif yball == 450:
+    elif yball > 385:
         done = True
         answer = "you are awful"
     for event in pygame.event.get(): 
