@@ -10,12 +10,12 @@ CHIMBUS = (80, 0, 80)
 PLIMBEY = (145, 141, 12)
 BACKGROUND = (23, 255, 247)
 PINKY = (230, 41, 173)
+BORDER = (63, 65, 69)
+colour = RED
 #define some variables
 x_speed = 0
 playerx = 250
-xball = 285
-yball = 305
-colour = RED
+xball, yball = 285, 305
 answer = "" 
 speedtimer = 0
 xoffset, yoffset = 3, 3
@@ -59,53 +59,53 @@ class Background(pygame.sprite.Sprite):
         self.image = pygame.image.load(image_file)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
-Background = Background("cali beaches.jpg", [0,0])
+Background = Background("cringus.png", [0,100])
 # Initialize Pygame
 pygame.init()
 # Set the height and width of the screen
-screen_width = 700
-screen_height = 400
+screen_width = 500
+screen_height = 700
 screen = pygame.display.set_mode([screen_width, screen_height])
 #name the window and play the background music
 pygame.display.set_caption("Project Plimble")
 pygame.mixer.init()
-pygame.mixer.music.load("California gurls.mp3")
+pygame.mixer.music.load("videogame.mp3")
 pygame.mixer.music.play(-1,0.0)
 #Make the sprite lists
 block_list = pygame.sprite.Group()
 all_sprites_list = pygame.sprite.Group()
-for i in range(1, 7):
+for i in range(5, 11):
     powerupcolour = random.randint(1,15)
-    if i == 1:
+    if i == 5:
         colour = RED
-    elif i == 2:
-        colour =  BLUE
-    elif i == 3:
-        colour = BLACK
-    elif i == 4:
-        colour = FUNNY
-    elif i == 5:
-        colour = CHIMBUS
     elif i == 6:
+        colour =  BLUE
+    elif i == 7:
+        colour = BLACK
+    elif i == 8:
+        colour = FUNNY
+    elif i == 9:
+        colour = CHIMBUS
+    elif i == 10:
         colour = PINKY
-    for j in range(15):
+    for j in range(14):
         colourblock = colour
         if j == powerupcolour:
             colourblock = PLIMBEY
         # This represents a block
-        block = Block(colourblock, 45, 15)
+        block = Block(colourblock, 37, 15)
         # Set a location for the block
-        block.rect.x = (j * 47)
+        block.rect.x = ((j * 39) + 10)
         block.rect.y = (i * 20)
         # Add the block to the list of objects
         block_list.add(block)
         all_sprites_list.add(block)
 # Create a player block
-player = player(RED, 50, 15)
+player = player(RED, 70, 10)
 player.speed = 1
 all_sprites_list.add(player)
 #create a ball
-ball = Ball(RED, 10, 10, 1)
+ball = Ball(RED, 6, 5, 1)
 all_sprites_list.add(ball)
 # Loop until the user clicks the close button.
 done = False
@@ -117,9 +117,9 @@ while not done:
     if len(block_list) == 0:
         done = True
         answer = "congratulation"
-    elif yball > 385:
-        done = True
-        answer = "you are awful"
+    #elif yball > 385:
+        #done = True
+        #answer = "you are awful"
     for event in pygame.event.get(): 
         if event.type == pygame.QUIT: 
             done = True
@@ -141,28 +141,35 @@ while not done:
     screen.fill(BACKGROUND)
     #set the background image
     screen.blit(Background.image, Background.rect)
+    #draw borders
+    pygame.draw.rect(screen,BORDER, [0, 0, 10, 700 ])
+    pygame.draw.rect(screen,BORDER, [490, 0, 10, 700 ])
+    pygame.draw.rect(screen,BORDER, [0, 0, 500, 10 ])
+    pygame.draw.rect(screen,BORDER, [0, 690, 500, 10 ])
+    #stop the paddles going off the screen
+    if  (player.rect.x) - 5 <= 0:
+        playerx += 5
+        x_speed = 0
+    elif player.rect.x + 5>= 430:
+        playerx -= 5 
+        x_speed = 0
     #Make the paddle and the ball move
     playerx += (x_speed * player.speed)
     player.rect.x = playerx
-    player.rect.y = 300
+    player.rect.y = 600
     xball -= xoffset 
     yball -= yoffset 
     ball.rect.x = xball
     ball.rect.y = yball
     #make the ball bounce off the screen
-    if xball < 0 or xball >= 685:
+    if xball < 10 or xball >= 480:
         xoffset = xoffset * -1
-    if yball < 0 or yball >= 400:
+    if yball < 10 or yball >= 670:
         yoffset = yoffset * -1
-    #stop the paddles going off the screen
-    if  player.rect.x<= 0:
-        playerx += 5
-    elif player.rect.x>= 670:
-        playerx -= 5  
     # See if the player block has collided with anything.
     blocks_hit_list = pygame.sprite.spritecollide(ball, block_list, True)
     #Make ball bounce of padde(change this to spritecollide)
-    if ((ball.rect.y > (player.rect.y - 15)) and (ball.rect.y < (player.rect.y + 50))) and ((ball.rect.x > player.rect.x - 15) and (ball.rect.x < player.rect.x + 50)):
+    if ((ball.rect.y > (player.rect.y - 10)) and (ball.rect.y < (player.rect.y + 10))) and ((ball.rect.x > player.rect.x - 10) and (ball.rect.x < player.rect.x + 70)):
         if x_speed == -5:
              xoffset = xoffset * -1
         yoffset = yoffset * -1 
@@ -181,7 +188,6 @@ while not done:
     #add a scoreboard
     for block in blocks_hit_list:
         score += 1
-        print(score)
     # Draw all the spites
     all_sprites_list.draw(screen)
     # Go ahead and update the screen with what we've drawn.
