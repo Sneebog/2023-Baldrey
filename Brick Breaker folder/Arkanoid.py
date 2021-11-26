@@ -191,7 +191,7 @@ while not done:
     # Clear the screen
     screen.fill(BACKGROUND)
     screen.blit(Background.image, Background.rect)
-   
+    print()
     playerx += (x_speed * player.speed)
     player.rect.x = playerx
     player.rect.y = 300
