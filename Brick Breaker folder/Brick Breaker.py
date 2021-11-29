@@ -77,6 +77,9 @@ screen = pygame.display.set_mode([screen_width, screen_height])
 outfit = pygame.font.SysFont('Outfit-Bold.ttf', 35)
 #name the window and play the background music
 pygame.display.set_caption("Project Plimble")
+pygame.mixer.init()
+pygame.mixer.music.load("videogame.mp3")
+pygame.mixer.music.play(-1,0.0)
 #Make the sprite lists
 block_list = pygame.sprite.Group()
 all_sprites_list = pygame.sprite.Group()
@@ -223,7 +226,7 @@ class Background(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
 gameover_timer = 0
-if answer == "you are awful":
+if answer == "congratulation":
     gameover = False 
     # Initialize Pygame
     pygame.init()
@@ -258,7 +261,7 @@ if answer == "you are awful":
         clock.tick(60)
         gameover_timer += 1
     pygame.quit
-elif answer == "congratulation":
+elif answer == "you are awful":
     gameover = False 
     # Initialize Pygame
     pygame.init()
